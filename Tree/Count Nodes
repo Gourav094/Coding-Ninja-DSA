@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+class TreeNode{
+    public:
+    int data;
+    vector<TreeNode*>children;
+    TreeNode(int data){
+        this->data=data;
+    }
+};
+
+TreeNode* InputLevelWise(){
+    int rootData;
+    // cout<<"Enter root data: ";
+    cin>>rootData;
+    TreeNode* root=new TreeNode(rootData);
+    queue<TreeNode*> queueNode;
+    queueNode.push(root);
+    while(!queueNode.empty()){
+        TreeNode* front=queueNode.front();
+        queueNode.pop();
+        int n;
+        // cout<<"Enter no of children of "<<front->data<<" : ";
+        cin>>n;
+        for(int i=0;i<n;i++){
+            int childData;
+            // cout<<"Enter data of "<<i<<" child: ";
+            cin>>childData;
+            TreeNode* child=new TreeNode(childData);
+            front->children.push_back(child);
+            queueNode.push(child);
+        }
+
+    }
+    return root;
+}
+
+int count(TreeNode* root){
+    int ans=1;
+    for(int i=0;i<root->children.size();i++){
+        ans+=count(root->children[i]);
+    }
+    return ans;
+}
+
+void Print(TreeNode* root){
+    queue<TreeNode*> qnode;
+    qnode.push(root);
+    while(!qnode.empty()){
+        TreeNode* front=qnode.front();
+        qnode.pop();
+        cout<<front->data<<": ";
+        for(int i=0;i<front->children.size();i++){
+            TreeNode* child=front->children[i];
+            cout<<child->data<<",";
+            qnode.push(child);
+        }
+        cout<<endl;
+    }
+}
+
+int main()
+{
+    TreeNode* root=InputLevelWise();
+    Print(root);
+    cout<<count(root)<<endl;
+    return 0;
+}
