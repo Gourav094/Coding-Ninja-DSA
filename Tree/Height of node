@@ -1,0 +1,16 @@
+/*
+Sample Input 1:
+10 3 20 30 40 2 40 50 0 0 0 0	
+
+Sample Output 1:
+3
+*/
+
+int Height(TreeNode* root){
+    int h=0;
+    for(int i=0;i<root->children.size();i++){
+        int m=Height(root->children[i]);
+        h=max(h,m);
+    }
+    return 1+h;
+}
