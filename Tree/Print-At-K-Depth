@@ -1,0 +1,12 @@
+void PrintAtLevelK(TreeNode* root,int k){
+    //edge case--no need 
+    if(root==NULL){
+        return;
+    }
+    if(k==0){
+        cout<<root->data<<" ";
+    }
+    for(int i=0;i<root->children.size();i++){
+        PrintAtLevelK(root->children[i],k-1);
+    }
+}
