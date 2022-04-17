@@ -1,0 +1,27 @@
+//WAY 2
+class Pair{
+    public:
+    TreeNode* a;
+    int sum=0;
+
+};
+Pair child(TreeNode* root){
+    Pair ans;
+    ans.a=root;
+    for(int i=0;i<root->children.size();i++){
+        ans.sum=root->children[i]->data;
+    }
+    for(int i=0;i<root->children.size();i++){
+        Pair a=child(root->children[i]);
+    
+        if(ans.sum<= a.sum){
+            ans.sum=a.sum;
+            ans.a=a.a;
+        }
+    }
+    return ans;
+}
+TreeNode* ChildSum(TreeNode* root){
+    return child(root).a;
+}
+
