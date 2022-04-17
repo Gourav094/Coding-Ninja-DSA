@@ -1,0 +1,12 @@
+int CountNode(TreeNode* root,int key){
+    int count=0;
+    if(root->data > key){
+        count++;
+    }
+    for(int i=0;i<root->children.size();i++){
+        int sum=CountNode(root->children[i],key);
+        count+=sum;
+
+    }
+    return count;
+}
