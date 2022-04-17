@@ -1,0 +1,11 @@
+bool Check(TreeNode* root,int key){
+    if(root->data==key){
+        return true;
+    }
+    bool ans=false;
+    for(int i=0;i<root->children.size();i++){
+        ans=Check(root->children[i],key);
+    }
+
+    return ans;
+}
