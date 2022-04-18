@@ -1,0 +1,16 @@
+bool Identical(TreeNode* root,TreeNode* root2){
+    if(root->data != root2->data){
+        return false;
+    }  
+    if(root->children.size() != root2->children.size()){
+        return false;
+    }
+    bool ans=true;
+    for(int i=0;i<root->children.size();i++){
+        ans=Identical(root->children[i],root2->children[i]);
+        if(ans==false){
+            return ans;
+        }
+    }
+    return ans;
+}
