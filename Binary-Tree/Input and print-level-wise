@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+class BinaryNode{
+    public:
+    int data;
+    BinaryNode* left;
+    BinaryNode* right;
+    BinaryNode(int data){
+        this->data=data;
+        left=NULL;
+        right=NULL;
+
+    }
+    ~BinaryNode(){
+        delete left;
+        delete right;
+    }
+};
+BinaryNode* takeInput(){
+    int rootData;
+    cout<<"Enter root data: ";
+    cin>>rootData;
+    if(rootData== -1){
+        return NULL;
+    }
+    BinaryNode* root=new BinaryNode(rootData);
+    queue<BinaryNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        BinaryNode* front=q.front();
+        q.pop();
+        int Leftchild;
+        cout<<"Enter left child of "<<front->data<<" ";
+        cin>>Leftchild;
+        if(Leftchild != -1){
+            BinaryNode* child=new BinaryNode(Leftchild);
+            front->left=child;
+            q.push(child);
+        }
+        int rightchild;
+        cout<<"Enter right child of "<<front->data<<" ";
+        cin>>rightchild;
+        if(rightchild != -1){
+            BinaryNode* child=new BinaryNode(rightchild);
+            front->right=child;
+            q.push(child);
+        }
+    }
+    return root;
+}
+
+void Print(BinaryNode* root){
+    if(!root){
+        return;
+    }
+    queue<BinaryNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        BinaryNode* front=q.front();
+        q.pop();
+        cout<<front->data<<": ";
+        if(front->left != NULL){
+            cout<<"L"<<front->left->data;
+            q.push(front->left);
+        }
+        if(front->right != NULL){
+            cout<<"R"<<front->right->data;
+            q.push(front->right);
+        }
+        cout<<endl;
+    }
+}
+
+int main()
+{
+    BinaryNode* root=takeInput();
+    Print(root);
+    delete root;
+    return 0;
+}
