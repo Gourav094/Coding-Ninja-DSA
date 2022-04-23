@@ -1,0 +1,32 @@
+void MirrorImage(BinaryNode* root){
+    if(root==NULL){
+        return;
+    }
+    BinaryNode *temp=root->left;
+    root->left=root->right;
+    root->right=temp;
+    MirrorImage(root->left);
+    MirrorImage(root->right);
+}
+// Directtly printing the mirror image
+/*void MirrorImage(BinaryNode* root){
+    if(root==NULL){
+        return;
+    }
+    queue<BinaryNode*>q;
+    cout<<root->data<<endl;
+    q.push(root);
+    while(!q.empty()){
+        BinaryNode* front=q.front();
+        q.pop();
+        if(front->right !=NULL){
+            cout<<front->right->data<<" ";
+            q.push(front->right);
+        }
+        if(front->left !=NULL){
+            cout<<front->left->data<<" ";
+            q.push(front->left);
+        }
+        cout<<endl;
+    }
+}*/
