@@ -1,0 +1,8 @@
+int Count(BinaryNode* root){
+    if(root == NULL){
+        return 0;
+    }
+    int count=1;
+    
+    return count+ Count(root->left) +Count(root->right);
+}
