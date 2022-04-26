@@ -1,0 +1,29 @@
+void LevelOrder(BinaryNode* root){
+    if(root==NULL){
+        return;
+
+    }
+    queue<BinaryNode* > q;
+    q.push(root);
+    q.push(NULL);
+    while(!q.empty()){
+        BinaryNode* current=q.front();
+        q.pop();
+        if(current==NULL){
+            if(q.size()==0){
+                break;
+            }
+            cout<<endl;
+            q.push(NULL);
+        }
+        else{
+            cout<<current->data<<" ";
+            if(current->left != NULL){
+                q.push(current->left);
+            }
+            if(current->right != NULL){
+                q.push(current->right);
+            }
+        }
+    }
+}
