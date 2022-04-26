@@ -1,0 +1,13 @@
+BinaryNode* RemoveLeaf(BinaryNode* root){
+    if(root->right==NULL && root->left==NULL){
+        delete root;
+        return NULL;
+    }
+    if(root->left != NULL){
+        root->left=RemoveLeaf(root->left);
+    }
+    if(root->right != NULL){
+        root->right=RemoveLeaf(root->right);
+    }
+    return root;
+}
