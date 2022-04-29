@@ -1,0 +1,104 @@
+#include <bits/stdc++.h>
+using namespace std;
+class BinaryNode{
+    public:
+    int data;
+    BinaryNode* left;
+    BinaryNode* right;
+    BinaryNode(int data){
+        this->data=data;
+        left=NULL;
+        right=NULL;
+    }
+    ~BinaryNode(){
+        delete left;
+        delete right;
+    }
+};
+
+BinaryNode* takeInput(){
+    int rootData;
+    cin>>rootData;
+    if(rootData==-1){
+        return NULL;
+    }
+    BinaryNode* root=new BinaryNode(rootData);
+    queue<BinaryNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        BinaryNode* front=q.front();
+        q.pop();
+        int leftChild;
+        cin>>leftChild;
+        if(leftChild != -1){
+            BinaryNode* Child=new BinaryNode(leftChild);
+            front->left=Child;
+            q.push(Child);
+        }
+        int rightChild;
+        cin>>rightChild;
+        if(rightChild != -1){
+            BinaryNode* Child=new BinaryNode(rightChild);
+            front->right=Child;
+            q.push(Child);
+
+        }
+    }
+    return root;
+}
+
+class Pair{
+    public:
+    int max;
+    int min;
+
+};
+Pair MinMax(BinaryNode* root){
+    Pair ans;
+    ans.min=ans.max=root->data;
+    if(root->left == NULL && root->right==NULL){
+        return ans;
+    }
+    if(root->left){
+        Pair left=MinMax(root->left);
+        ans.min=min(ans.min,left.min);
+        ans.max=max(ans.max,left.max);
+    }
+    if(root->right){
+        Pair right=MinMax(root->right);
+        ans.min=min(ans.min,right.min);
+        ans.max=max(ans.max,right.max);
+    }
+    return ans;
+}
+
+void Print(BinaryNode* root){
+    if(root==NULL){
+        return;
+    }
+    queue<BinaryNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        BinaryNode* front=q.front();
+        q.pop();
+        cout<<front->data<<": ";
+        if(front->left){
+            cout<<"L"<<front->left->data;
+            q.push(front->left);
+        }
+        if(front->right){
+            cout<<"R"<<front->right->data;
+            q.push(front->right);
+        }
+        cout<<endl;
+    }
+}
+
+int main()
+{
+    BinaryNode* root=takeInput();
+    Pair ans=MinMax(root);
+    cout<<ans.min<<" "<<ans.max<<endl;
+    delete root;
+    return 0;
+}
