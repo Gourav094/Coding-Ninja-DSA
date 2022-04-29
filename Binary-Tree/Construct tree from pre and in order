@@ -1,0 +1,29 @@
+BinaryNode* Construct(int *Pre,int *In,int inS,int inE,int PreS,int PreE){
+    if(inS>inE){
+        return NULL;
+    }
+    int rootData=Pre[PreS];
+    int rootIndex=-1;
+    int i=0;
+    while(rootData != In[i]){
+        i++;
+    }
+    rootIndex=i;
+    int LinS=inS;
+    int LinE=rootIndex-1;
+    int LpreS=PreS+1;
+    int LpreE=LinE-LinS+LpreS;
+    int RinS=rootIndex+1;
+    int RinE=inE;
+    int RpreS=LpreE+1;
+    int RpreE=PreE;
+    
+    BinaryNode* root=new BinaryNode(rootData);
+    root->left=Construct(Pre,In,LinS,LinE,LpreS,LpreE);
+    root->right=Construct(Pre,In,RinS,RinE,RpreS,RpreE);
+    return root;
+}
+
+BinaryNode* Build(int *pre,int *in,int prelen,int inlen){
+    return Construct(pre,in,0,inlen-1,0,prelen-1);
+}
