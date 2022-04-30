@@ -1,0 +1,14 @@
+BinaryNode* Create(int *a,int s,int e){
+    if(s>e){
+        return NULL;
+
+    }
+    int mid=(s+e)/2;
+    BinaryNode* root=new BinaryNode(a[mid]);
+    BinaryNode* Left=Create(a,s,mid-1);
+    BinaryNode* Right=Create(a,mid+1,e);
+    root->left=Left;
+    root->right=Right;
+    return root;
+}
+//printing of BST is using preorder traversal
