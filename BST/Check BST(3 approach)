@@ -1,0 +1,71 @@
+//this solution has O(n*h) time complexity
+int Maximum(BinaryNode* root){
+    if(root==NULL){
+        return INT_MIN;
+
+    }
+    return max(root->data,max(Maximum(root->left),Maximum(root->right)));
+}
+int Minimum(BinaryNode* root){
+    if(root==NULL){
+        return INT_MAX;
+
+    }
+    return min(root->data,min(Minimum(root->left),Minimum(root->right)));
+}
+
+bool Check(BinaryNode* root){
+    if(root==NULL){
+        return true;
+    }
+    int leftmax=Maximum(root->left);
+    int rightmin=Minimum(root->right);
+    bool output=(leftmax < root->data) && (root->data <= rightmin) && Check(root->left) && Check(root->right);
+    return output;
+}
+
+
+//optimal solution
+class Pair{
+    public:
+    bool isBst;
+    int max;
+    int min;
+
+};
+
+Pair Check(BinaryNode* root){
+    if(root==NULL){
+        Pair ans;
+        ans.min=INT_MAX;
+        ans.max=INT_MIN;
+        ans.isBst=true;
+        return ans;
+    }
+    Pair left=Check(root->left);
+    Pair right=Check(root->right);
+    Pair ans;
+    ans.max=max(root->data,max(left.max,right.max));
+    ans.min=min(root->data,min(left.min,right.min));
+    ans.isBst=(root->data > left.max) && (root->data < right.min) && left.isBst && right.isBst;
+    
+    return ans;
+}
+bool CheckBST(BinaryNode* root){
+    Pair ans=Check(root);
+    return ans.isBst;
+}
+
+//3rd approach
+bool isBst3(BinaryNode* root,int min=INT_MIN,int max=INT_MAX){
+    if(root==NULL){
+        return true;
+    }
+    if(root->data > max && root->data < min){
+        return false;
+    }
+    bool left=isBst3(root->left,min,root->data-1);
+    bool right=isBst3(root->right,root->data,max);
+    return left && right;
+}
+
