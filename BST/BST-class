@@ -1,0 +1,128 @@
+class BST{
+    BinaryNode* root;
+    bool hasData(int data,BinaryNode* root){
+        if(root==NULL){
+            return false;
+        }
+        if(root->data==data){
+            return true;
+
+        }
+        else if(root->data > data){
+            return hasData(data,root->left);
+        }
+        else{
+            return hasData(data,root->right);
+        }
+    }
+    BinaryNode* Insert(int data,BinaryNode* root){
+        if(root==NULL){
+            BinaryNode* root=new BinaryNode(data);
+            return root;
+        }
+        if(root->data < data){
+            root->right=Insert(data,root->right);
+        }
+        else{
+            root->left=Insert(data,root->left);
+            
+        }
+        return root;
+    }
+   
+    BinaryNode* Delete(int data,BinaryNode* root){
+        if(root==NULL){
+            return NULL;
+        }
+        if(root->data == data){
+            
+            if(root->left==NULL && root->right==NULL){
+                delete root;
+                return NULL;
+            }
+            else if(root->left==NULL){
+                BinaryNode* ans=root->right;
+                root->right=NULL;
+                delete root;
+                return ans;
+            }
+            else if(root->right==NULL){
+                BinaryNode* ans=root->left;
+                root->left=NULL;
+                delete root;
+                return ans;
+            }
+            else{
+                BinaryNode* right=root->right;
+                while(right->left!=NULL){
+                    right=right->left;
+                }
+                int rightmin=right->data;
+                root->data=rightmin;
+                root->right=Delete(rightmin,root->right);
+                return root;
+            }
+        }
+        if(root->data > data){
+            root->left=Delete(data,root->left);
+        }
+        if(root->data < data){
+            root->right=Delete(data,root->right);
+        }
+        return root;
+    }
+    void Print(BinaryNode* root){
+        if(root==NULL){
+            return;
+        }
+        queue<BinaryNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            BinaryNode* front=q.front();
+            q.pop();
+            cout<<front->data<<": ";
+            if(front->left){
+                cout<<"L"<<front->left->data;
+                q.push(front->left);
+            }
+            if(front->right){
+                cout<<"R"<<front->right->data;
+                q.push(front->right);
+            }
+            cout<<endl;
+        }
+    }
+    public:
+    BST(){
+        root=NULL;
+    }
+    void print(){
+        Print(root);
+    }
+    void Delete(int data){
+        root=Delete(data,root);
+        return;
+    }
+    void Insert(int data){
+        root=Insert(data,root);
+        return;
+    }
+    bool hasData(int data){
+        return hasData(data,root);
+    }
+};
+//main function
+/*int main()
+{
+    BST b;
+    b.Insert(10);
+    b.Insert(5);
+    b.Insert(20);
+    b.Insert(3);
+    b.Insert(15);
+    b.Insert(7);
+    b.Delete(10);
+    b.Delete(100);
+    b.print();
+    return 0;
+}*/
