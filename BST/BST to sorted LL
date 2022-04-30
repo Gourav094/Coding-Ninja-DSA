@@ -1,0 +1,117 @@
+#include <bits/stdc++.h>
+using namespace std;
+class BinaryNode{
+    public:
+    int data;
+    BinaryNode* left;
+    BinaryNode* right;
+    BinaryNode(int data){
+        this->data=data;
+        left=NULL;
+        right=NULL;
+    }
+    ~BinaryNode(){
+        delete left;
+        delete right;
+    }
+};
+BinaryNode* takeInput(){
+    int rootData;
+    cin>>rootData;
+    if(rootData==-1){
+        return NULL;
+    }
+    BinaryNode* root=new BinaryNode(rootData);
+    queue<BinaryNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        BinaryNode* front=q.front();
+        q.pop();
+        int leftChild;
+        cin>>leftChild;
+        if(leftChild != -1){
+            BinaryNode* Child=new BinaryNode(leftChild);
+            front->left=Child;
+            q.push(Child);
+        }
+        int rightChild;
+        cin>>rightChild;
+        if(rightChild != -1){
+            BinaryNode* Child=new BinaryNode(rightChild);
+            front->right=Child;
+            q.push(Child);
+
+        }
+    }
+    return root;
+}
+
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node(int data){
+        this->data=data;
+        next=NULL;
+    }
+};
+class Pair{
+    public:
+    Node* head;
+    Node* tail;
+    
+};
+Pair LinkedList(BinaryNode* root){
+    if(root==NULL){
+        Pair ans;
+        ans.head=NULL;
+        ans.tail=NULL;
+        return ans;
+    }
+    Pair ans;
+    Pair left=LinkedList(root->left);
+    Pair right=LinkedList(root->right);
+    Node* new_node=new Node(root->data);
+    if(left.head==NULL && right.head==NULL){
+        ans.head=new_node;
+        ans.tail=new_node;
+        return ans;
+    } 
+    else if(!left.head && right.head){
+        ans.head=new_node;
+        new_node->next=right.head;
+        ans.tail=right.tail;
+    }
+    else if(!right.head && left.head){
+        ans.head=left.head;
+        left.tail->next=new_node;
+        ans.tail=new_node;
+    }
+    else{
+        ans.head=left.head;
+        left.tail->next=new_node;
+        new_node->next=right.head;
+        ans.tail=right.tail;
+ 
+    }
+    return ans;
+}
+Node* LL(BinaryNode* root){
+    return LinkedList(root).head;
+}
+void print(Node* head)
+{
+    while(head!=NULL){
+        cout<<head->data<<" ";
+        head=head->next;
+    }
+}
+
+int main()
+{
+    BinaryNode* root=takeInput();
+    Node* head=LL(root);
+    print(head);
+    delete root;
+    return 0;
+}
