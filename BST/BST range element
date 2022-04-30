@@ -1,0 +1,14 @@
+void Range(BinaryNode* root,int a,int b){
+    if(root==NULL){
+        return;
+    }
+    if(root->data > a ){
+        Range(root->left,a,b);
+    }
+    if(root->data >= a && root->data <= b){
+        cout<<root->data<<" ";
+    }
+    if(root->data < b){
+        Range(root->right,a,b);
+    }
+}
