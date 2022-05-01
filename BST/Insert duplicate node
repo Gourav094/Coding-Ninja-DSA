@@ -1,0 +1,12 @@
+//printing is level order traversal
+void Duplicate(BinaryNode* root){
+    if(root==NULL){
+        return;
+    }
+    
+    Duplicate(root->left);
+    Duplicate(root->right);
+    BinaryNode* temp=root->left;
+    root->left=new BinaryNode(root->data);
+    root->left->left=temp;
+}
