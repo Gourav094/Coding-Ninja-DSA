@@ -1,0 +1,32 @@
+//IDEA:- we are creating a hashmap here to store the count of arr then we are comparing value(frequency) of key(number) and returning the maximum count.
+#include <bits/stdc++.h>
+using namespace std;
+
+int Maximum(int *arr,int n){
+    unordered_map<int ,int > map;
+    
+    for(int i=0;i<n;i++){
+        map[arr[i]]++;
+    }
+    int key=0,value=0;
+    for(int i=0;i<n;i++){
+        if(map[arr[i]]>value){
+            key=arr[i];
+            value=map[arr[i]];
+        }
+    }
+    return key;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int *arr=new int[n];
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    
+    int ans=Maximum(arr,n);
+    cout<<ans<<endl;
+    return 0;
+}
