@@ -18,13 +18,18 @@ int main()
     }
     cout<<"Size:"<<ourmap.size()<<endl;
     ourmap.erase("ghi");
-    cout<<ourmap.at("ghi")<<endl;  //will gonna create error 
+   // cout<<ourmap.at("ghi")<<endl;  //will gonna create error 
     if(ourmap.count("ghi")>0){
         cout<<"ghi is present! "<<endl;
     }
     
     cout<<"size:"<<ourmap.size()<<endl;
-
+    //itretor
+    unordered_map<string,int> ::iterator it=ourmap.begin();
+    while(it != ourmap.end()){
+        cout<<"key: "<<it->first<<" value : "<<it->second<<endl;
+        it++;
+    }
 
     return 0;
 }
