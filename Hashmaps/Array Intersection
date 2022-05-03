@@ -1,0 +1,39 @@
+/* Idea here is firsly store the count of element of first array in hashmap and then check in second array elemnt if the 
+element is occured then print and rempve form hashmap else move to secong element */
+
+#include <bits/stdc++.h>
+using namespace std;
+void Intersection(int *a,int n,int *b,int m){
+    unordered_map<int ,int > map;
+    for(int i=0;i<n;i++){
+        map[a[i]]++;
+    }
+    for(int i=0;i<m;i++){
+        if(map.count(b[i]) > 0){
+            cout<<b[i]<<" ";
+            map[b[i]]--;
+        }
+    }
+}
+
+int main()
+{
+    int q;
+    cin>>q;
+    while(q--){
+        int n,m;
+        cin>>n;
+        int *a=new int[n];
+        int *b=new int[m];
+        for(int i=0;i<n;i++){
+            cin>>a[i];
+        }
+        cin>>m;
+        for(int i=0;i<m;i++){
+            cin>>b[i];
+        }
+        Intersection(a,n,b,m);
+        cout<<endl;
+    }
+    return 0;
+}
