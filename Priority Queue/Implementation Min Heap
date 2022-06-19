@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Priority{
+    vector<int> pq;
+    public:
+    Priority(){
+    }
+    int getmin(){
+        return pq[0];
+    }
+    
+    bool isempty(){
+        return pq.size()==0;
+    }
+    int getsize(){
+        if(isempty())return 0;
+        return pq.size();
+    }
+    void insert(int x){
+        pq.push_back(x);
+        //Up Heapify
+        int child=pq.size()-1;
+        while(child > 0){
+            int parent=(child-1)/2;
+            if(pq[parent] > pq[child]){
+                int temp=pq[parent];
+                pq[parent]=pq[child];
+                pq[child]=temp;
+
+            }
+            else break;
+            child=parent;
+        }
+    }
+    int Remove(){
+        if(pq.size()==0)
+            return 0;
+        int ans=pq[0];
+        pq[0]=pq[pq.size()-1];
+        pq.pop_back();
+        //down heapify
+        int parent=0;
+        int left=2*parent+1;
+        int right=2*parent+2;
+        while(left < pq.size()){
+            int minindex=parent;
+
+            if(pq[minindex] > pq[left]){
+                minindex=left;
+            }
+            if(right < pq.size()  && pq[minindex] > pq[right]){
+                minindex=right;
+            }
+            if(minindex == parent){
+                break;
+            }
+            int temp=pq[minindex];
+            pq[minindex]=pq[parent];
+            pq[parent]=temp;
+            parent=minindex;
+            left=2*parent+1;
+            right=2*parent+2;
+        }
+        return ans;
+    }
+};
+
+int main()
+{
+    Priority p;
+    p.insert(10);
+    p.insert(50);
+    p.insert(20);
+    p.insert(100);
+    p.insert(60);
+    cout<<"size"<<p.getsize()<<endl;
+    while(!p.isempty()){
+        cout<<p.Remove()<<endl;
+        
+    }
+    return 0;
+}
